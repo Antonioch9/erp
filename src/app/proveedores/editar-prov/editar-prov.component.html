@@ -1,0 +1,74 @@
+<div class="col-md-12">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a routerLink="/inicio">Inicio</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a routerLink="/compras">Compras</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a routerLink="/listado-proveedores">Proveedores</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Editar proveedores</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="col-md-12 titulo">
+    <span>Editar proveedor</span>
+    <button class="btn btn-primary" routerLink="/listado-proveedores">Volver</button>
+  </div>
+  <!-- ocuapra el 8/12 partes -->
+  <div class="col-md-8 offset-md-2 col-12">
+    <div class="formulario">
+      <form [formGroup]="proveedorForm" (ngSubmit)="editarProv()">
+        <div class="form-group">
+          <input type="text" class="form-control"  formControlName="nombre" placeholder="nombre" [(ngModel)]="proveedor.nombre">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control"  formControlName="cif" placeholder="cif" [(ngModel)]="proveedor.cif" >
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="domicilio" placeholder="domicilio" [(ngModel)]="proveedor.domicilio">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" formControlName="cp" placeholder="cp" [(ngModel)]="proveedor.cp">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="localidad" placeholder="localidad" [(ngModel)]="proveedor.localidad">
+        </div>
+        <div class="form-group">
+          <select type="text" class="form-control" formControlName="provincia" [(ngModel)]="proveedor.provincia">
+            <option *ngFor="let provincia of provincias" [ngValue]="provincia" > {{provincia}}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" formControlName="telefono" placeholder="telefono" [(ngModel)]="proveedor.telefono">
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" formControlName="email" placeholder="email"[(ngModel)]="proveedor.email">
+          <!-- para validar el correo electronico y que sea de formato @.. ponemos required email           -->
+          <!-- estados para las validaciones
+              - pristine:el campo esta intacto
+              - Dirty:el usuario empieza a escribir en el campo
+              - Touched:el campo a perdido el foco
+              -Invalid: no cumple las reglas
+              - valid: cumple los requisitos
+            -->
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control"  formControlName="contacto" placeholder="contacto" [(ngModel)]="proveedor.contacto">
+        </div>
+        <button type="submit" class="btn btn-primary">
+         <span >Guardar Cambios</span> 
+        <!-- <span *ngIf="enviando"><i class="fas fa-spinner fa-pulse"></i></span> -->
+        </button>
+        <button type="submit" class="btn btn-danger" routerLink="/listado-proveedores">Cancelar</button>
+      </form>
+      <!-- para la informacion si esta duplicada -->
+      <!-- <p class="alert alert-warning" [@alerta]="estadoAlerta">
+        {{mensaje}}
+      </p> -->
+    </div>
+  </div>

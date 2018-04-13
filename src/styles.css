@@ -2,6 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    
 }
 
 .box{
@@ -16,17 +17,12 @@
     cursor: pointer;
     transition: 500ms all;
 }
-.rojo {
-    background-color: #d9534f;
-}
+
 .rojo:hover {
     background-color: #9e2e2a;
 }
 .rojo span{
     color: #c54b47;
-}
-.verde {
-    background-color: #5cb85c;
 }
 .verde:hover {
     background-color: #3b8a3b;
@@ -41,7 +37,9 @@
     background-color: #3f639e;
 }
 
-
+a{
+    cursor: pointer;
+}
 
 .box span {
     
@@ -61,6 +59,57 @@
 .titulo span {
     font-size:20px;
 }
-.formulario {
+.formulario{
+    border: 3px solid grey;
+    box-shadow: 3px 3px 3px grey;
     padding: 20px 20px 40px;
+    margin: 30px;
+    
+}
+.row {
+    margin-top: 10px;
+}
+.radiobotones{
+    padding-top: 26px;
+}
+.rojo{
+    color: red;
+    background-color: #c54b47
+}
+.verde{
+    color: green;
+    background-color: #528852;
+}
+.tabla-facturas th:nth-child(4){
+    text-align: right;
+}
+.tabla-facturas td:nth-child(4){
+    text-align: left;
+}
+
+/* stylos para barra fija */
+.barra-fija{
+    width: 100px;
+    height: calc(100vh - 56px);
+    background-color: rgb(78, 74, 74);
+    position: fixed;
+    top:56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.barra-fija div {
+    color: rgb(167, 164, 164);
+    font-size: 50px;
+    transition: color 500ms ease-in-out;
+}
+.barra-fija div:hover {
+    color: rgb(255, 254, 254);
+    cursor: pointer; 
+}
+
+.col-md-12{
+    width: calc(100% - 100px);
+    margin-left: 100px;
 }

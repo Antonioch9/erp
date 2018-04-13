@@ -1,4 +1,3 @@
-
 <!-- hacer una barra lateral -->
 <div class="barra-fija">
     <div title="Proveedores" routerLink="/listado-proveedores">
@@ -10,7 +9,8 @@
   </div>
   
   
-  <div class="col-md-12">
+  
+<div class="col-md-12">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
@@ -19,44 +19,41 @@
       <li class="breadcrumb-item">
         <a routerLink="/compras">Compras</a>
       </li>
-      <li class="breadcrumb-item active" aria-current="page">Proveedores</li>
+      <li class="breadcrumb-item active" aria-current="page">Listado de facturas</li>
     </ol>
   </nav>
 </div>
 <div class="col-md-12 titulo">
-  <span>Proveedores</span>
+  <span>Facturas</span>
   <span class="alert alert-warning" [@alerta]="estadoAlerta">
-          {{mensaje}}</span>
-  <button class="btn btn-primary" routerLink="/crear-proveedores">
+            {{mensaje}}</span>
+  <button class="btn btn-primary" routerLink="/crear-fact">
     <i class="fas fa-plus"></i>
   </button>
 </div>
 <div class="col-md-12">
-  <table class="table table-bordered table-striped">
+  <table class="table table-bordered table-striped tabla-facturas">
     <tr>
-      <th>Nombre</th>
+      <th>Proveedor</th>
       <th>CIF</th>
-      <th>Localidad</th>
-      <!-- celda para el boton -->
-      <th></th>
+      <th>Fecha Factura</th>
+      <th>Concepto</th>
+      <th>Total</th>
     </tr>
-    <tr *ngFor="let proveedor of proveedores">
-      <td>{{proveedor.nombre}}</td>
-      <td>{{proveedor.cif}}</td>
-      <td>{{proveedor.localidad}}</td>
-      <!-- fila para el boton -->
+    <tr *ngFor="let fact of factura">
+      <td>{{fact.proveedor}}</td>
+      <td>{{fact.cif}}</td>
+      <td>{{fact.fecha}}</td>
+      <td>{{fact.concepto}}</td>
+      <td>{{fact.total}}</td>
       <td>
-        <button class="btn btn-success" 
-        routerLink="/editar-proveedor/{{proveedor._id}}">
+        <button class="btn btn-success" routerLink ="/editar-fact/{{fact._id}}">
           <i class="far fa-edit"></i>
         </button>
-        <!-- introducimos el modal -->
-        <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" (click)="obtenerId(proveedor._id)">
-    <i class="far fa-trash-alt"></i>
-  </button>
-  
-  <!-- Modal -->
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" (click)="obtenerId(factura._id)">
+          <i class="far fa-trash-alt"></i>
+        </button>
+        <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -72,7 +69,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
           <button type="button" class="btn btn-primary" data-dismiss="modal"
-          (click)="borrarProveedor()">
+          (click)="borrarFactura()">
           Aceptar
         </button>
         </div>
@@ -80,6 +77,5 @@
     </div>
   </div>
       </td>
-    </tr>
   </table>
 </div>

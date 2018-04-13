@@ -13,6 +13,10 @@ import { CabeceraComponent } from './cabecera/cabecera.component';
 import { ProveedoresService } from './servicios/proveedores.service';
 import { CrearProvComponent } from './proveedores/crear-prov/crear-prov.component';
 import { EditarProvComponent } from './proveedores/editar-prov/editar-prov.component';
+import { FacturasService } from './servicios/facturas.service';
+import { ListadoFactComponent } from './facturas/listado-fact/listado-fact.component';
+import { EditarFactComponent } from './facturas/editar-fact/editar-fact.component';
+import { CreacionFactComponent } from './facturas/creacion-fact/creacion-fact.component';
 
 const rutas:Routes = [
     //la primera ruta es la raiz
@@ -20,8 +24,11 @@ const rutas:Routes = [
     {path:'',component:InicioComponent},
     {path:'compras',component:ComprasComponent},
     {path:'listado-proveedores',component:ListadoProvComponent},
+    {path:'listado-fact',component:ListadoFactComponent},
     {path:'crear-proveedores',component:CrearProvComponent},
+    {path:'crear-fact',component:CreacionFactComponent},
     {path:'editar-proveedor/:id',component:EditarProvComponent},
+    {path:'editar-fact/:id',component:EditarFactComponent},
     //error 404
     {path:'**',component:InicioComponent}
     
@@ -34,7 +41,10 @@ const rutas:Routes = [
     ListadoProvComponent,
     CabeceraComponent,
     CrearProvComponent,
-    EditarProvComponent
+    EditarProvComponent,
+    ListadoFactComponent,
+    EditarFactComponent,
+    CreacionFactComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +54,7 @@ const rutas:Routes = [
     BrowserAnimationsModule
     
   ],
-  providers: [ProveedoresService],
+  providers: [ProveedoresService, FacturasService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

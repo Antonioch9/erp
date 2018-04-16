@@ -73,12 +73,18 @@ a{
     padding-top: 26px;
 }
 .rojo{
-    color: red;
+    
     background-color: #c54b47
 }
 .verde{
-    color: green;
+    
     background-color: #528852;
+}
+.valido{
+    color: green;
+}
+.no-valido{
+    color: red;
 }
 .tabla-facturas th:nth-child(4){
     text-align: right;
@@ -112,4 +118,7 @@ a{
 .col-md-12{
     width: calc(100% - 100px);
     margin-left: 100px;
+}
+.autenticacion {
+    margin-top: 80px;
 }

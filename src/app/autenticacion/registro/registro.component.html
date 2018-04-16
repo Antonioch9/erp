@@ -1,0 +1,53 @@
+<div class="col-md-6 offset-md-3 col-12 autenticacion">
+  <h1>Introduzca sus datos</h1>
+  <form [formGroup]="registroForm" (ngSubmit)="registroUsuario()">
+    <div class="form-group">
+      <label for="nombre">Nombre</label>
+      <span *ngIf="registroForm.controls.nombre.valid && registroForm.controls.nombre.dirty">
+        <i class="fas fa-check-circle valido"></i>
+      </span>
+      <span class="no-valido" *ngIf="registroForm.controls.nombre.invalid && registroForm.controls.nombre.touched">
+        <i class="fas fa-times-circle no-valido "></i>
+        *Campo obligatorio
+      </span>
+      <input type="text" class="form-control" formControlName="nombre" autofocus>
+    </div>
+    <div class="form-group">
+      <label for="email">Correo electronico</label>
+      <span *ngIf="registroForm.controls.email.valid && registroForm.controls.email.dirty">
+        <i class="fas fa-check-circle valido"></i>
+      </span>
+      <span class="no-valido" *ngIf="registroForm.controls.email.invalid && registroForm.controls.email.touched">
+        <i class="fas fa-times-circle no-valido "></i>
+        * Escriba un correo electronico correcto
+      </span>
+      <input type="text" class="form-control" formControlName="email">
+    </div>
+    <div class="form-group">
+      <label for="password">Contraseña</label>
+      <span *ngIf="registroForm.controls.password.valid && registroForm.controls.password.dirty">
+        <i class="fas fa-check-circle valido"></i>
+      </span>
+      <span class="no-valido" *ngIf="registroForm.controls.password.invalid && registroForm.controls.password.touched">
+        <i class="fas fa-times-circle no-valido "></i>
+        * La contraseña debe tener una mayusculas, una minuscula
+      </span>
+      <input type="password" class="form-control" formControlName="password">
+    </div>
+    <div class="form-group">
+      <label for="confirma">Repita la Contraseña</label>
+      <span class="no-valido" *ngIf="registroForm.value.password !== registroForm.value.confirma && registroForm.controls.confirma.dirty">
+        * las contraseñas deben coincidir
+        <i class="fas fa-times-circle no-valido "></i>
+      </span>
+      <input type="password" class="form-control" formControlName="confirma">
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" [disabled]="registroForm.invalid || (registroForm.value.password !== registroForm.value.confirma)">Resgistrar</button>
+    </div>
+  </form>
+  <p class="alert alert-warning" [@alerta]="estadoAlerta">
+    {{mensaje}}
+  </p>
+</div>

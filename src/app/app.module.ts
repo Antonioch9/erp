@@ -17,11 +17,17 @@ import { FacturasService } from './servicios/facturas.service';
 import { ListadoFactComponent } from './facturas/listado-fact/listado-fact.component';
 import { EditarFactComponent } from './facturas/editar-fact/editar-fact.component';
 import { CreacionFactComponent } from './facturas/creacion-fact/creacion-fact.component';
+import { RegistroComponent } from './autenticacion/registro/registro.component';
+import { AutenticacionService } from './servicios/autenticacion.service';
+import { LoginComponent } from './autenticacion/login/login.component';
 
 const rutas:Routes = [
     //la primera ruta es la raiz
     //cuando la ruta sea inicial carga el componete inicio
     {path:'',component:InicioComponent},
+    //ruta para la autenticacion
+    {path:'registro',component:RegistroComponent},
+    {path:'inicio-sesion',component:LoginComponent},
     {path:'compras',component:ComprasComponent},
     {path:'listado-proveedores',component:ListadoProvComponent},
     {path:'listado-fact',component:ListadoFactComponent},
@@ -44,7 +50,9 @@ const rutas:Routes = [
     EditarProvComponent,
     ListadoFactComponent,
     EditarFactComponent,
-    CreacionFactComponent
+    CreacionFactComponent,
+    RegistroComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +62,7 @@ const rutas:Routes = [
     BrowserAnimationsModule
     
   ],
-  providers: [ProveedoresService, FacturasService],
+  providers: [ProveedoresService, FacturasService, AutenticacionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

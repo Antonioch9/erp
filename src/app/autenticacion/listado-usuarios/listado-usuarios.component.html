@@ -15,11 +15,11 @@
       <div class="campo"><p>Correo electrónico</p></div>
       <div class="campo"><p>Rol usuario</p></div>
     </div>
-    <div>
+    <div *ngFor="let usuario of usuarios">
       <div class="fila">
-        <div class="campo">Nombre</div>
-        <div class="campo">Email</div>
-        <div class="campo">Rol</div>
+        <div class="campo">{{usuario.nombre}}</div>
+        <div class="campo">{{usuario.email}}</div>
+        <div class="campo">{{usuario.rol}}</div>
       </div>
     </div>
   </div>

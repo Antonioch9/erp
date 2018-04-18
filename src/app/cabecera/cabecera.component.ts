@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AutenticacionService } from '../servicios/autenticacion.service';
 
 @Component({
   selector: 'app-cabecera',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cabecera.component.css']
 })
 export class CabeceraComponent implements OnInit {
-
-  constructor() { }
+  
+  nombre:string;
+  constructor(private autenticacionService:AutenticacionService) { }
 
   ngOnInit() {
   }
+  getLogged(){
+    return this.autenticacionService.isLogged();
+ }
 
 }

@@ -20,6 +20,16 @@ import { CreacionFactComponent } from './facturas/creacion-fact/creacion-fact.co
 import { RegistroComponent } from './autenticacion/registro/registro.component';
 import { AutenticacionService } from './servicios/autenticacion.service';
 import { LoginComponent } from './autenticacion/login/login.component';
+import { CrearClientesComponent } from './clientes/crear-clientes/crear-clientes.component';
+import { ListadoClientesComponent } from './clientes/listado-clientes/listado-clientes.component';
+import { EditarClientesComponent } from './clientes/editar-clientes/editar-clientes.component';
+import { CrearPresupuestosComponent } from './presupuestos/crear-presupuestos/crear-presupuestos.component';
+import { ListadoPresupuestosComponent } from './Presupuestos/listado-presupuestos/listado-presupuestos.component';
+import { EditarPresupuestosComponent } from './Presupuestos/editar-presupuestos/editar-presupuestos.component';
+import { VentasComponent } from './ventas/ventas.component';
+import { AutenticacionGuard } from './servicios/autenticacion.guard';
+import { ListadoUsuariosComponent } from './autenticacion/listado-usuarios/listado-usuarios.component';
+
 
 const rutas:Routes = [
     //la primera ruta es la raiz
@@ -27,14 +37,24 @@ const rutas:Routes = [
     {path:'',component:InicioComponent},
     //ruta para la autenticacion
     {path:'registro',component:RegistroComponent},
+    {path:'crear-clientes',component:CrearClientesComponent, canActivate:[AutenticacionGuard]},
+    {path:'editar-clientes',component:EditarClientesComponent, canActivate:[AutenticacionGuard]},
+    {path:'listado-clientes',component:ListadoClientesComponent, canActivate:[AutenticacionGuard]},
+    {path:'crear-presupuestos',component:CrearPresupuestosComponent, canActivate:[AutenticacionGuard]},
+    {path:'editar-presupuestos',component:EditarPresupuestosComponent, canActivate:[AutenticacionGuard]},
+    {path:'listado-presupuestos',component:ListadoPresupuestosComponent, canActivate:[AutenticacionGuard]},
     {path:'inicio-sesion',component:LoginComponent},
-    {path:'compras',component:ComprasComponent},
-    {path:'listado-proveedores',component:ListadoProvComponent},
-    {path:'listado-fact',component:ListadoFactComponent},
-    {path:'crear-proveedores',component:CrearProvComponent},
-    {path:'crear-fact',component:CreacionFactComponent},
-    {path:'editar-proveedor/:id',component:EditarProvComponent},
-    {path:'editar-fact/:id',component:EditarFactComponent},
+    {path:'listado-usuarios',component:ListadoUsuariosComponent, canActivate:[AutenticacionGuard]},
+
+    //esto lo ponemos para proteger la ruta, que no se pueda acceder si no esta loggeado
+    {path:'compras',component:ComprasComponent, canActivate:[AutenticacionGuard]},
+    {path:'ventas',component:VentasComponent, canActivate:[AutenticacionGuard]},
+    {path:'listado-proveedores',component:ListadoProvComponent,canActivate:[AutenticacionGuard]},
+    {path:'listado-fact',component:ListadoFactComponent, canActivate:[AutenticacionGuard]},
+    {path:'crear-proveedores',component:CrearProvComponent, canActivate:[AutenticacionGuard]},
+    {path:'crear-fact',component:CreacionFactComponent, canActivate:[AutenticacionGuard]},
+    {path:'editar-proveedor/:id',component:EditarProvComponent, canActivate:[AutenticacionGuard]},
+    {path:'editar-fact/:id',component:EditarFactComponent, canActivate:[AutenticacionGuard]},
     //error 404
     {path:'**',component:InicioComponent}
     
@@ -52,7 +72,16 @@ const rutas:Routes = [
     EditarFactComponent,
     CreacionFactComponent,
     RegistroComponent,
-    LoginComponent
+    LoginComponent,
+    CrearClientesComponent,
+    ListadoClientesComponent,
+    EditarClientesComponent,
+    CrearPresupuestosComponent,
+    ListadoPresupuestosComponent,
+    EditarPresupuestosComponent,
+    VentasComponent,
+    ListadoUsuariosComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -62,7 +91,7 @@ const rutas:Routes = [
     BrowserAnimationsModule
     
   ],
-  providers: [ProveedoresService, FacturasService, AutenticacionService],
+  providers: [ProveedoresService, FacturasService, AutenticacionService, AutenticacionGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,12 +4,23 @@
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
+  <div class="collapse navbar-collapse " id="navbarCollapse">
     <ul class="navbar-nav ml-auto">
-      <button class="btn btn-primary" routerLink="/registro">Registro</button>
-    </ul>
-    <ul class="navbar-nav ml-auto">
+
+    
+    <div class="sesion">
+    <span *ngIf="autenticacionService.nombre">
+        <i class="fab fa-500px"></i>
+      {{autenticacionService.nombre}}
+    </span>
+  
+    <ul *ngIf="!getLogged()" class="navbar-nav ml-auto">
       <button class="btn btn-primary" routerLink="/inicio-sesion">Iniciar Sesion</button>
     </ul>
+    <ul *ngIf="getLogged()" class="navbar-nav ml-auto">
+      <button class="btn btn-primary" (click)="autenticacionService.logout()">Serrar Sesion</button>
+    </ul>
+  </div>
+</ul>
   </div>
 </nav>

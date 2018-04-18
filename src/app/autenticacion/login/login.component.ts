@@ -28,13 +28,13 @@ export class LoginComponent implements OnInit {
   enviando: boolean = false;
 
 
-  constructor(private fl: FormBuilder, private autenticacionService: AutenticacionService, private router:Router) { }
+  constructor(private fl: FormBuilder, private autenticacionService: AutenticacionService, private router: Router) { }
 
   ngOnInit() {
     this.loginForm = this.fl.group({
       //validacion para el email
       email: ['', Validators.email],
-      password: ['',Validators.required]
+      password: ['', Validators.required]
     })
   }
   get estadoAlerta() {
@@ -44,6 +44,16 @@ export class LoginComponent implements OnInit {
     this.mostrarAlerta = false;
     this.enviando = true;
     this.usuario = this.guardarUsuario();
+    this.autenticacionService.login(this.usuario).subscribe((res: any) => {
+      this.enviando = false;
+      this.router.navigate(['/']);
+      // console.log(res)
+    },(error:any)=>{
+      this.mostrarAlerta = true;
+      if(error.error.mensaje){
+        this.mensaje = error.error.mensaje
+      }
+    })
 
   }
   guardarUsuario() {

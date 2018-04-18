@@ -27,7 +27,11 @@
       <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Iniciar Sesion</button>
     </div>
   </form>
-  <!-- <p class="alert alert-warning" [@alerta]="estadoAlerta">
+  <p class="alert alert-warning" [@alerta]="estadoAlerta">
     {{mensaje}}
-  </p> -->
+  </p>
+  <p>
+    si no dispone de cuenta
+    <a routerLink="/registro">Pulse aquí</a>
+  </p>
 </div>

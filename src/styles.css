@@ -22,7 +22,7 @@
     background-color: #9e2e2a;
 }
 .rojo span{
-    color: #c54b47;
+    color: #913835;
 }
 .verde:hover {
     background-color: #3b8a3b;
@@ -36,7 +36,13 @@
 .azul:hover {
     background-color: #3f639e;
 }
-
+.naranja {
+    color: rgb(248, 118, 71);
+    background-color: orangered;
+}
+.naranja:hover{
+    background-color: rgb(168, 65, 27)
+}
 a{
     cursor: pointer;
 }
@@ -122,3 +128,39 @@ a{
 .autenticacion {
     margin-top: 80px;
 }
+.sesion{
+    display: flex;
+}
+.sesion span{
+    color: grey;
+    font-size: 20px;
+    margin-right: 10px;
+}
+.cabecera {
+    display: flex;
+    width: 100%;
+}
+.cabecera .campo{
+    margin: 0px 5px;
+    height: 40px;
+}
+.cabecera .campo:nth-child(1){width: 40%}
+.cabecera .campo:nth-child(2){width: 40%}
+.cabecera .campo:nth-child(3){width: 20%}
+
+.cabecera .campo p {
+    font-weight: bold;
+}
+.fila {
+    display: flex;
+    width: 100%;
+}
+.fila .campo {
+    margin: 5px;
+    height: 40px;
+    border-bottom: 1px solid lightgray;
+}
+.fila .campo:nth-child(1){width: 40%}
+.fila .campo:nth-child(2){width: 40%}
+.fila .campo:nth-child(3){width: 20%}
+

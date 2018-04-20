@@ -1,0 +1,76 @@
+<div *ngIf="autenticacionService.getPermLisUsuarios()">
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a routerLink="/inicio">Inicio</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
+    </ol>
+  </nav>
+</div>
+<div class="container titulo">
+  <span>Usuarios</span>
+  <span class="btn btn-warning" [@alerta]="estadoAlerta">{{mensaje}}</span>
+  <button class="btn btn-primary" *ngIf="!mostrarFormulario" (click)="verFormulario()">
+    <i class="fas fa-user-plus"></i>
+  </button>
+  <button class="btn btn-danger" *ngIf="mostrarFormulario" (click)="verFormulario()">
+      <i class="fas fa-ban"></i>
+  </button>
+</div>
+<div class="container" [@formulario]="estadoFormulario">
+  <form class="fila" [formGroup]="crearUsuarioForm" (ngSubmit)="crearUsuario()">
+    <div class="nuevo">
+      <input type="text" placeholder="Nombre" formControlName="nombre">
+    </div>
+    <div class="nuevo">
+      <input type="email" placeholder="Correo Electrónico" formControlName="email">
+    </div>
+    <div class="nuevo">
+      <input type="text" placeholder="Contraseña" formControlName="password">
+    </div>
+    <div class="nuevo">
+      <select formControlName="rol">
+        <option value="Administrador">Administrador</option>
+        <option value="Director de compras">Director de compras</option>
+        <option value="Empleado de compras">Empleado de compras</option>
+        <option value="Director de ventas">Director de ventas</option>
+        <option value="Empleado de ventas">Empleado de ventas</option>
+      </select>
+    </div>
+    <div class="nuevo">
+      <button type="submit" class="btn btn-primary" [disabled]="crearUsuarioForm.invalid">
+      <span *ngIf="!enviando">
+        <i class="fas fa-save"></i>
+      </span>
+      <span *ngIf="enviando">
+        <i class="fas fa-spinner fa-pulse"></i>
+      </span>
+    </button>
+    </div>
+  </form>
+</div>
+<div class="container">
+  <div class="cabecera">
+    <div class="campo">
+      <p>Nombre</p>
+    </div>
+    <div class="campo">
+      <p>Correo Electrónico</p>
+    </div>
+    <div class="campo">
+      <p>Rol de usuario</p>
+    </div>
+    <div class="campo"></div>
+  </div>
+  <div *ngFor="let usuario of usuarios">
+    <div class="fila">
+      <div class="campo">{{usuario.nombre}}</div>
+      <div class="campo">{{usuario.email}}</div>
+      <div class="campo">{{usuario.rol}}</div>
+      <div class="campo"></div>
+    </div>
+  </div>
+</div>
+</div>

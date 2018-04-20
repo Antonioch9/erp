@@ -44,7 +44,7 @@ export class ListadoFactComponent implements OnInit {
     console.log(this.id)
   }
   borrarFactura(){
-    this.facturasService.deleteFra(this.id).subscribe((resp:any)=>{
+    this.facturasService.deleteFactura(this.id).subscribe((resp:any)=>{
       console.log(this.id)
       this.mensaje="La factura ha sido eliminada"
       this.mostrarAlerta = true;

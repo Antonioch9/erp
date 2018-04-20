@@ -77,7 +77,7 @@ export class CreacionFactComponent implements OnInit {
   }
   crearFra(){
     this.factura = this.guardarFra();
-    this.facturasService.postFra(this.factura).subscribe((resp:any)=>{
+    this.facturasService.postFactura(this.factura).subscribe((resp:any)=>{
       console.log(this.factura);
       this.router.navigate(['/listado-fact'])
     },(error:any)=>{

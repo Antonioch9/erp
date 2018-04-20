@@ -81,14 +81,14 @@ export class EditarFactComponent implements OnInit {
     return resultado;
     }
   cargarFactura(id){
-    this.facturasService.getFacturasId(id).subscribe((res:any)=>{
+    this.facturasService.getFacturaId(id).subscribe((res:any)=>{
       this.facturas = res.factura
       console.log(this.facturas);
     })
   }
   editarFactura(){
     this.facturas =this.guardarFra();
-    this.facturasService.putFra(this.id,this.facturas).subscribe((res:any)=>{
+    this.facturasService.putFactura(this.id,this.facturas).subscribe((res:any)=>{
       this.router.navigate(["/listado-fact"]);
     });
   }

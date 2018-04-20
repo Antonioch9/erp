@@ -1,26 +1,20 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
-  <a class="navbar-brand" routerLink="/">ERP APP</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
-    aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-md  fixed-top navbar-light bg-light mb-4">
+  <a class="navbar-brand" routerLink="/">ERP App</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse " id="navbarCollapse">
+  <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav ml-auto">
-
-    
-    <div class="sesion">
-    <span *ngIf="autenticacionService.nombre">
-        <i class="fab fa-500px"></i>
-      {{autenticacionService.nombre}}
-    </span>
-  
-    <ul *ngIf="!getLogged()" class="navbar-nav ml-auto">
-      <button class="btn btn-primary" routerLink="/inicio-sesion">Iniciar Sesion</button>
+      <div class="sesion">
+        <span *ngIf="getNombre()">
+            <i class="fas fa-user-circle"></i>
+          {{nombre}}
+        </span>
+        <button *ngIf="!getLogged()" class="btn btn-primary"
+                routerLink="/inicio-sesion">Iniciar sesión</button>
+        <button *ngIf="getLogged()" class="btn btn-primary"
+        (click)="autenticacionService.logout()">Cerrar sesión</button>
+    </div>
     </ul>
-    <ul *ngIf="getLogged()" class="navbar-nav ml-auto">
-      <button class="btn btn-primary" (click)="autenticacionService.logout()">Serrar Sesion</button>
-    </ul>
-  </div>
-</ul>
   </div>
 </nav>

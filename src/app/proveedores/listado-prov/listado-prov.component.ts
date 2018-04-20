@@ -1,66 +1,69 @@
 import { Component, OnInit } from '@angular/core';
 import { ProveedoresService } from '../../servicios/proveedores.service';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { trigger, state, style, animate, transition} from '@angular/animations';
+import { AutenticacionService } from '../../servicios/autenticacion.service';
 
 @Component({
   selector: 'app-listado-prov',
   templateUrl: './listado-prov.component.html',
   styleUrls: ['./listado-prov.component.css'],
   animations: [
-    //definido en el HTML
-    trigger('alerta', [
-      state('show', style({ opacity: 1 })),
-      state('hide', style({ opacity: 0 })),
+    trigger('alerta',[
+      state('show', style({ opacity: 1})),
+      state('hide', style({ opacity: 0})),
       transition('show => hide', animate('500ms ease-out')),
       transition('hide => show', animate('500ms ease-in'))
     ])
   ]
 })
 export class ListadoProvComponent implements OnInit {
-  id: string;
-  //declaramos una variable
-  proveedores: any;
-  constructor(private proveedoresService: ProveedoresService) { }
-  mensaje: string = 'Error de conexion con el servidor';
-  //la enlazaremos con estadoAlerta del HTML
-  mostrarAlerta: boolean = false;
+
+  mensaje:string='Error de conexión con el servidor';
+  mostrarAlerta:boolean = false;
+  proveedores:any;
+  id:string;
+
+  constructor(private proveedoresService: ProveedoresService,
+              private autenticacionService: AutenticacionService) { }
+
   ngOnInit() {
     this.cargarProveedores();
-
   }
-  get estadoAlerta() {
+
+  get estadoAlerta(){
     return this.mostrarAlerta ? 'show' : 'hide';
   }
-  //creamos un metodo para que detecte cualquier actualizacion
-  cargarProveedores() {
-    this.proveedoresService.getProveedores().subscribe((resp: any) => {
-      console.log(resp);
-      this.proveedores = resp.proveedores;
-      console.log(this.proveedores);
-    }, error => {
+
+  cargarProveedores(){
+    this.proveedoresService.getProveedores()
+        .subscribe((resp:any)=>{
+          this.proveedores=resp.proveedores;
+          console.log(this.proveedores);
+    }, error =>{
       console.log(error);
-    })
-  }
-  // este metodo lo pondremos para el boton acepatar modal
-  obtenerId(id){
-    this.id = id;
-  }
-  borrarProveedor() {
-    this.proveedoresService.deleteProveedor(this.id).subscribe((resp: any) => {
-      this.mensaje = "El proveedor ha sido eliminado correctamente";
-      this.mostrarAlerta =true;
-      
-      this.cargarProveedores();
-      setTimeout(()=>{
-        this.mostrarAlerta = false;
-      },2500)
-      
-    },(error:any)=>{
-      this.mensaje = "Error de conexion con el servidor";
-      this.mostrarAlerta = true;
-      setTimeout(()=>{
-        this.mostrarAlerta = false;
-      },2500)
     });
   }
+
+  obtenerId(id){ //En este metodo nos va a permitir sacar el id del proveedor cuando le demos al primer boton de borrar
+    this.id = id;
+  }
+
+  borrarProveedor(){ //Y en este método ya tendremos el id, por eso ponemos this.id. Esto es porque pierde el DOM y borraría el proveedor de arriba.
+    this.proveedoresService.deleteProveedor(this.id)
+                           .subscribe((resp:any)=>{
+                            this.mensaje= "El proveedor ha sido eliminado correctamente";
+                            this.mostrarAlerta = true;
+                            this.cargarProveedores()
+                            setTimeout(()=>{
+                              this.mostrarAlerta=false;
+                            },2500);
+                           },(error:any)=>{
+                            this.mensaje='Error de conexión con el servidor';
+                            this.mostrarAlerta=true;
+                            setTimeout(()=>{
+                              this.mostrarAlerta=false;
+                            },2500);
+                           });
+  }
+
 }

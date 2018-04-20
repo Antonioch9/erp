@@ -1,86 +1,81 @@
-
-<!-- hacer una barra lateral -->
 <div class="barra-fija">
-    <div title="Proveedores" routerLink="/listado-proveedores">
-      <i class="fas fa-address-book"></i>
+    <div title="Proveedores" routerLink="/Listado-proveedores">
+        <i class="far fa-address-book"></i>
     </div>
-    <div title="Facturas" routerLink="/listado-fact">
+    <div title="Facturas" routerLink="/listado-facturas">
       <i class="far fa-money-bill-alt"></i>
     </div>
   </div>
-  
-  
-  <div class="col-md-12">
+
+<div class="col-md-12">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a routerLink="/inicio">Inicio</a>
-        </li>
-        <li class="breadcrumb-item">
-          <a routerLink="/compras">Compras</a>
-        </li>
-        <li class="breadcrumb-item">
-          <a routerLink="/listado-proveedores">Proveedores</a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">Editar proveedores</li>
+        <li class="breadcrumb-item"><a routerLink="/inicio">Inicio</a></li>
+        <li class="breadcrumb-item"><a routerLink="/compras">Compras</a></li>
+        <li class="breadcrumb-item"><a routerLink="/Listado-proveedores">Proveedores</a></li>
+        <li class="breadcrumb-item active" aria-current="page"
+        *ngIf="autenticacionService.getPermProveedores()">Editar proveedor</li>
+        <li class="breadcrumb-item active" aria-current="page"
+        *ngIf="!autenticacionService.getPermProveedores()">Visualizar proveedor</li>
       </ol>
     </nav>
   </div>
   <div class="col-md-12 titulo">
-    <span>Editar proveedor</span>
-    <button class="btn btn-primary" routerLink="/listado-proveedores">Volver</button>
+    <span *ngIf="autenticacionService.getPermProveedores()">Editar proveedor</span>
+    <span *ngIf="!autenticacionService.getPermProveedores()">Visualizar proveedor</span>
+    <button class="btn btn-primary"
+            routerLink="/Listado-proveedores"><strong>Volver</strong></button>
   </div>
-  <!-- ocuapra el 8/12 partes -->
-  <div class="col-md-8 offset-md-2 col-12">
-    <div class="formulario">
-      <form [formGroup]="proveedorForm" (ngSubmit)="editarProv()">
-        <div class="form-group">
-          <input type="text" class="form-control"  formControlName="nombre" placeholder="nombre" [(ngModel)]="proveedor.nombre">
+      <div class="col-md-8 offset-md-2 col-12">
+        <div class="formulario">
+          <form [formGroup]="proveedorForm" (ngSubmit)="editarProv()">
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre" [(ngModel)]="proveedor.nombre" [readonly]="!autenticacionService.getPermProveedores()">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="cif" placeholder="CIF" [(ngModel)]="proveedor.cif" [readonly]="!autenticacionService.getPermProveedores()"> <!-- #cif Para que ponga el foco ahí-->
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="domicilio" placeholder="Dirección" [(ngModel)]="proveedor.domicilio" [readonly]="!autenticacionService.getPermProveedores()">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="cp" placeholder="CP" [(ngModel)]="proveedor.cp" [readonly]="!autenticacionService.getPermProveedores()">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="localidad" placeholder="Localidad" [(ngModel)]="proveedor.localidad" [readonly]="!autenticacionService.getPermProveedores()">
+            </div>
+            <div class="form-group" *ngIf="autenticacionService.getPermProveedores()">
+              <select class="form-control" formControlName="provincia" [(ngModel)]="proveedor.provincia" >
+                <option *ngFor="let provincia of provincias" [ngValue]="provincia">
+                  {{provincia}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group" *ngIf="!autenticacionService.getPermProveedores()">
+              <input type="text" class="form-control" formControlName="provincia" placeholder="Provincia" [(ngModel)]="proveedor.provincia" [readonly]="!autenticacionService.getPermProveedores()">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="telefono" placeholder="Telefono" [(ngModel)]="proveedor.telefono" [readonly]="!autenticacionService.getPermProveedores()">
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" formControlName="email" placeholder="Email" [(ngModel)]="proveedor.email" [readonly]="!autenticacionService.getPermProveedores()">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="contacto" placeholder="Contacto" [(ngModel)]="proveedor.contacto" [readonly]="!autenticacionService.getPermProveedores()">
+            </div>
+            <div *ngIf="autenticacionService.getPermProveedores()">
+              <button type="submit" class="btn btn-primary">
+                <span> Guardar Cambios </span>
+                <!-- <span *ngIf="enviando"><i class="fas fa-spinner fa-pulse"></i></span> -->
+              </button>
+              <button routerLink="/Listado-proveedores" 
+                      class="btn btn-danger">
+                Cancelar
+              </button>
+           </div>
+          </form>
+          <!-- <p class="alert alert-warning"
+                [@alerta]="estadoAlerta">{{mensaje}}</p> -->
         </div>
-        <div class="form-group">
-          <input type="text" class="form-control"  formControlName="cif" placeholder="cif" [(ngModel)]="proveedor.cif" >
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" formControlName="domicilio" placeholder="domicilio" [(ngModel)]="proveedor.domicilio">
-        </div>
-        <div class="form-group">
-          <input type="number" class="form-control" formControlName="cp" placeholder="cp" [(ngModel)]="proveedor.cp">
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" formControlName="localidad" placeholder="localidad" [(ngModel)]="proveedor.localidad">
-        </div>
-        <div class="form-group">
-          <select type="text" class="form-control" formControlName="provincia" [(ngModel)]="proveedor.provincia">
-            <option *ngFor="let provincia of provincias" [ngValue]="provincia" > {{provincia}}
-            </option>
-          </select>
-        </div>
-        <div class="form-group">
-          <input type="number" class="form-control" formControlName="telefono" placeholder="telefono" [(ngModel)]="proveedor.telefono">
-        </div>
-        <div class="form-group">
-          <input type="email" class="form-control" formControlName="email" placeholder="email"[(ngModel)]="proveedor.email">
-          <!-- para validar el correo electronico y que sea de formato @.. ponemos required email           -->
-          <!-- estados para las validaciones
-              - pristine:el campo esta intacto
-              - Dirty:el usuario empieza a escribir en el campo
-              - Touched:el campo a perdido el foco
-              -Invalid: no cumple las reglas
-              - valid: cumple los requisitos
-            -->
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control"  formControlName="contacto" placeholder="contacto" [(ngModel)]="proveedor.contacto">
-        </div>
-        <button type="submit" class="btn btn-primary">
-         <span >Guardar Cambios</span> 
-        <!-- <span *ngIf="enviando"><i class="fas fa-spinner fa-pulse"></i></span> -->
-        </button>
-        <button type="submit" class="btn btn-danger" routerLink="/listado-proveedores">Cancelar</button>
-      </form>
-      <!-- para la informacion si esta duplicada -->
-      <!-- <p class="alert alert-warning" [@alerta]="estadoAlerta">
-        {{mensaje}}
-      </p> -->
-    </div>
-  </div>
+      </div>
+            

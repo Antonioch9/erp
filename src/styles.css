@@ -198,6 +198,7 @@
 
 .cabecera .campo p {
     font-weight: bold;
+    padding-left: 4px;
 }
 
 .fila{
@@ -209,6 +210,9 @@
     margin: 5px;
     height:40px;
     border-bottom: 1px solid lightgray;
+}
+.fila .campo p {
+    padding-left: 4px;
 }
 
 .fila .campo:nth-child(1) { width: 30%; }
@@ -237,7 +241,7 @@
     border-bottom:none;
 }
 
-form.fila{
+form.fila:first-child(1){
     margin-bottom: 40px;
 }
 
@@ -258,4 +262,26 @@ form.fila{
 
 .fila select{
     height: 40px;
+}
+.fila.editable .campo {
+    margin: 5px;
+    height:40px;
+    border-bottom: 1px solid lightgray;
+}
+
+.fila.editable .campo:nth-child(1) { width: 30%;border-bottom: none; }
+.fila.editable .campo:nth-child(2) { width: 30%;border-bottom: none; }
+.fila.editable .campo:nth-child(3) { width: 30%;border-bottom: none; }
+.fila.editable .campo:nth-child(4) { 
+    width: 10%; 
+    border-bottom:none;
+}
+.fila.editable input{
+    padding-bottom: 17px;
+    padding-left: 2px;
+    
+}
+.fila.editable select {
+    width: 100%;
+    
 }

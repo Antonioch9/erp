@@ -13,10 +13,10 @@ import { CabeceraComponent } from './cabecera/cabecera.component';
 import { ProveedoresService } from './servicios/proveedores.service';
 import { CrearProvComponent } from './proveedores/crear-prov/crear-prov.component';
 import { EditarProvComponent } from './proveedores/editar-prov/editar-prov.component';
-import { ListadoFacComponent } from './facturas/listado-fac/listado-fac.component';
+import { ListadoFactComponent } from './facturas/listado-fact/listado-fact.component';
 import { FacturasService } from './servicios/facturas.service';
-import { CrearFacComponent } from './facturas/crear-fac/crear-fac.component';
-import { EditarFacComponent } from './facturas/editar-fac/editar-fac.component';
+import { CreacionFactComponent } from './facturas/creacion-fact/creacion-fact.component';
+import { EditarFactComponent } from './facturas/editar-fact/editar-fact.component';
 import { RegistroComponent } from './autenticacion/registro/registro.component';
 import { AutenticacionService } from './servicios/autenticacion.service';
 import { LoginComponent } from './autenticacion/login/login.component';
@@ -34,9 +34,9 @@ const rutas: Routes=[
   {path: 'Listado-proveedores', component: ListadoProvComponent, canActivate: [AutenticacionGuard]},
   {path: 'crear-proveedor', component: CrearProvComponent, canActivate: [AutenticacionGuard]},
   {path: 'editar-proveedor/:id', component: EditarProvComponent, canActivate: [AutenticacionGuard]}, //Ademas va a recibir un id
-  {path: 'listado-facturas', component: ListadoFacComponent, canActivate: [AutenticacionGuard]},
-  {path: 'crear-factura', component: CrearFacComponent, canActivate: [AutenticacionGuard]},
-  {path: 'editar-factura/:id', component: EditarFacComponent, canActivate: [AutenticacionGuard]},
+  {path: 'listado-facturas', component: ListadoFactComponent, canActivate: [AutenticacionGuard]},
+  {path: 'crear-factura', component: CreacionFactComponent, canActivate: [AutenticacionGuard]},
+  {path: 'editar-factura/:id', component: EditarFactComponent, canActivate: [AutenticacionGuard]},
   {path: 'listado-clientes', component: ListadoClieComponent, canActivate: [AutenticacionGuard]},
   {path: '**', component: InicioComponent}
 ];
@@ -50,9 +50,9 @@ const rutas: Routes=[
     CabeceraComponent,
     CrearProvComponent,
     EditarProvComponent,
-    ListadoFacComponent,
-    CrearFacComponent,
-    EditarFacComponent,
+    ListadoFactComponent,
+    CreacionFactComponent,
+    EditarFactComponent,
     RegistroComponent,
     LoginComponent,
     ListadoClieComponent,

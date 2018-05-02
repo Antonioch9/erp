@@ -13,40 +13,38 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a routerLink="/inicio">Inicio</a></li>
       <li class="breadcrumb-item"><a routerLink="/ventas">Ventas</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Clientes</li>
+      <li class="breadcrumb-item active" aria-current="page">Presupuestos</li>
     </ol>
   </nav>
 </div>
 <div class="col-md-12 titulo">
-  <span>Clientes</span>
-  <span class="alert alert-warning"
-        [@alerta]="estadoAlerta">{{mensaje}}</span>
+  <span>Presupuestos</span>
   <button class="btn btn-primary"
-          routerLink="/crear-cliente">
+          routerLink="/crear-presupuesto">
       <i class="fas fa-plus-circle"></i>
   </button>
 </div>
 <div class="col-md-12">
-  <table class="table table-bordered table-striped">
+  <table class="table table-bordered table-striped tabla-facturas">
     <tr>
-      <th>Nombre</th>
+      <th>Cliente</th>
       <th>CIF</th>
-      <th>Localidad</th>
+      <th>Total</th>
       <th></th>
     </tr>
-    <tr *ngFor="let cliente of clientes">
-      <td>{{cliente.nombre}}</td>
-      <td>{{cliente.cif}}</td>
-      <td>{{cliente.localidad}}</td>
+    <tr *ngFor="let presupuesto of presupuestos">
+      <td>{{presupuesto.cliente}}</td>
+      <td>{{presupuesto.cif}}</td>
+      <td>{{presupuesto.total}}</td>
       <td>
         <button class="btn btn-success"
-         routerLink="/editar-cliente/{{cliente._id}}">
-         <i class="fas fa-pen-square"></i>
+          routerLink="/editar-presupuesto/{{presupuesto._id}}">
+          <i class="fas fa-pen-square"></i>
         </button>
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-danger" 
                 data-toggle="modal" data-target="#exampleModal"
-                (click)="obtenerId(cliente._id)">
+                (click)="obtenerId(presupuesto._id)">
           <i class="fas fa-trash-alt"></i>
         </button>
         <!-- Modal -->
@@ -62,12 +60,12 @@
                 </button>
               </div>
               <div class="modal-body">
-                ¿Está seguro de eliminar el cliente?
+                ¿Está seguro de eliminar el presupuesto?
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
-                        (click)="borrarCliente()">
+                        (click)="borrarPresupuesto()">
                   Aceptar
                 </button>
               </div>
@@ -78,4 +76,4 @@
     </tr>
   </table>
 </div>
-
+  

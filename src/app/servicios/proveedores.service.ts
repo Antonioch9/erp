@@ -9,56 +9,52 @@ import { AutenticacionService } from './autenticacion.service';
 @Injectable()
 export class ProveedoresService {
 
-  token:String;
+  token:string;
 
-  constructor(private http: HttpClient,private autenticacionService:AutenticacionService) {
-    this.token = autenticacionService.token
-   }
+  constructor(private http: HttpClient,
+              private autenticacionService: AutenticacionService) { }
 
-  getProveedores(){
-    let url = 'http://localhost:3000/proveedor';
+  getProveedores(desde){
+    let url = 'http://localhost:3000/proveedor?desde=' + desde;
     return this.http.get(url)
-                    .map((resp:any)=>{
-                      return resp;
-                    });
-
+                  .map( (resp:any) => {
+                    return resp;
+                  });
   }
-
+  
   getProveedorId(id){
-    let url = 'http://localhost:3000/proveedor/'; //Le añadimos la barra al final para que pegue despues el id
+    let url = 'http://localhost:3000/proveedor/';
     return this.http.get(url + id)
-                    .map((resp:any)=>{
-                      return resp;
-                    });
+                      .map( (resp:any) => {
+                        return resp;
+                      });
   }
 
   postProveedor(proveedor){
-    let url = "http://localhost:3000/proveedor";
-    return this.http.post(url,proveedor)
-                    .map((resp:any)=>{
-                      console.log(resp);
-                      return resp;
-                    });
+    let url = 'http://localhost:3000/proveedor';
+    return this.http.post(url, proveedor)
+                  .map( (resp:any) => {
+                    console.log(resp)
+                    return resp;
+                  });
+  }
 
-}
-
-  putProveedor(id,proveedor){
-    let url = "http://localhost:3000/proveedor/";
+  putProveedor(id, proveedor){
+    let url = 'http://localhost:3000/proveedor/';
     return this.http.put(url+id, proveedor)
-                    .map((resp:any)=>{
-                      return resp;
-                    });
+                  .map( (resp:any) => {
+                    return resp;
+                  });
   }
 
   deleteProveedor(id){
-    let url = "http://localhost:3000/proveedor/" + id + '?token=' + this.token  ;
+    this.token = this.autenticacionService.token;
+    let url = 'http://localhost:3000/proveedor/'+ id + '?token=' + this.token;
     return this.http.delete(url)
-                    .map((resp:any)=>{
+                    .map( (resp:any) => {
                       return resp;
                     });
   }
 
 
-
 }
-

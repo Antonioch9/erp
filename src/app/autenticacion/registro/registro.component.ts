@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { AutenticacionService } from '../../servicios/autenticacion.service';
 import { Router } from '@angular/router';
-import { trigger, state, style, animate, transition} from '@angular/animations';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-registro',
@@ -20,23 +20,24 @@ import { trigger, state, style, animate, transition} from '@angular/animations';
 export class RegistroComponent implements OnInit {
 
   registroForm: FormGroup;
-  usuario: any;
-  mensaje:string='Error de conexión con el servidor';
+  usuario:any;
+  mensaje:string = 'Error de conexión con el servidor';
   mostrarAlerta:boolean = false;
-  enviando:boolean=false;
+  enviando:boolean = false;
 
   constructor(private fr: FormBuilder,
               private autenticacionService: AutenticacionService,
               private router: Router) { }
 
   ngOnInit() {
-    this.registroForm=this.fr.group({
+    this.registroForm = this.fr.group({
       nombre: ['', Validators.required],
-      email:['', Validators.email],
-      password:['',Validators.required],
-        //, Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")]],
-      confirma:''
-    });
+      email: ['', Validators.email],
+      password: ['', Validators.required],
+                     //, Validators.pattern("(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$")]
+
+      confirma: ''
+    })
   }
 
   get estadoAlerta(){
@@ -44,20 +45,20 @@ export class RegistroComponent implements OnInit {
   }
 
   registroUsuario(){
-    this.mostrarAlerta=false;
-    this.enviando=true;
-    this.usuario= this.guardarUsuario();
+    this.mostrarAlerta = false;
+    this.enviando = true;
+    this.usuario = this.guardarUsuario();
     this.autenticacionService.postUsuario(this.usuario)
-                             .subscribe((res:any)=>{
-                              this.router.navigate(['/']);
-                              this.enviando=false;
-                             },(error:any)=>{
-                              this.mostrarAlerta=true;
-                              this.enviando=false;
-                              if (error.error.errores.errors.email.message){
-                                this.mensaje = error.error.errores.errors.email.message;
-                              }
-                             });
+                .subscribe((res:any)=>{
+                  this.router.navigate(['/']);
+                  this.enviando = false;
+                },(error:any)=>{
+                  this.mostrarAlerta = true;
+                  this.enviando = false;
+                  if(error.error.errores.errors.email.message){
+                    this.mensaje = error.error.errores.errors.email.message;
+                  }
+                })
   }
 
   guardarUsuario(){
@@ -66,7 +67,8 @@ export class RegistroComponent implements OnInit {
       email: this.registroForm.get('email').value.toLowerCase(),
       password: this.registroForm.get('password').value
     }
+
     return guardarUsuario;
-}
+  }
 
 }

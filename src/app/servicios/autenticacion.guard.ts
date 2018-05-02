@@ -5,15 +5,14 @@ import { AutenticacionService } from './autenticacion.service';
 
 @Injectable()
 export class AutenticacionGuard implements CanActivate {
-
+  
   constructor(private autenticacionService: AutenticacionService){}
-
+  
   canActivate(){
-    if (this.autenticacionService.isLogged()){
+    if(this.autenticacionService.isLogged()){
       return true;
-    } else {
+    }else{
       return false;
     }
-   
   }
 }

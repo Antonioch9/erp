@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProveedoresService } from '../../servicios/proveedores.service';
-import { trigger, state, style, animate, transition} from '@angular/animations';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { AutenticacionService } from '../../servicios/autenticacion.service';
 
 @Component({
@@ -18,10 +18,15 @@ import { AutenticacionService } from '../../servicios/autenticacion.service';
 })
 export class ListadoProvComponent implements OnInit {
 
-  mensaje:string='Error de conexión con el servidor';
+  mensaje:string = 'Error de conexión con el servidor';
   mostrarAlerta:boolean = false;
   proveedores:any;
   id:string;
+  desde:number = 0;
+  totales:number;
+  botones:number[] = [];
+  tramoBotones:number = 0;
+  numeroBotones:Number = 0;
 
   constructor(private proveedoresService: ProveedoresService,
               private autenticacionService: AutenticacionService) { }
@@ -35,35 +40,87 @@ export class ListadoProvComponent implements OnInit {
   }
 
   cargarProveedores(){
-    this.proveedoresService.getProveedores()
-        .subscribe((resp:any)=>{
-          this.proveedores=resp.proveedores;
-          console.log(this.proveedores);
-    }, error =>{
-      console.log(error);
-    });
+    this.proveedoresService.getProveedores(this.desde)
+               .subscribe((resp:any)=>{
+                  this.proveedores = resp.proveedores;
+                  this.totales = resp.totales;
+                  this.botones = [];
+                  this.numeroBotones=this.totales /5;
+                  var i;
+                  for(i = this.tramoBotones; i< this.tramoBotones + 5; i++){
+                    this.botones.push(i+1);
+                  }
+               }, error => {
+                 console.log(error);
+               })
   }
 
-  obtenerId(id){ //En este metodo nos va a permitir sacar el id del proveedor cuando le demos al primer boton de borrar
+  setDesde(valor){
+    var desde = this.desde + valor;
+    // if (desde >= this.totales){
+    //   return;
+    // } else if (desde < 0) {
+    //   return;
+    // } else {
+      this.desde += valor;
+      this.cargarProveedores();
+    // }
+    
+   }
+
+  updateDesde(valor){
+    this.desde = valor;
+    this.cargarProveedores();
+  }
+
+  avanzarBotones(){
+    if (this.desde % 25 === 0){
+      this.botones = [];
+      this.tramoBotones += 5;
+      var i;
+      for(i = this.tramoBotones; i< this.tramoBotones + 5; i++){
+        this.botones.push(i+1);
+      }
+    }
+  }
+
+  retrocederBotones(){
+    if ((this.desde + 5) % 25 === 0){
+      this.botones = [];
+      this.tramoBotones -= 5;
+      var i;
+      for(i = this.tramoBotones; i< this.tramoBotones + 5; i++){
+        this.botones.push(i+1);
+      }
+    }
+  }
+
+
+  obtenerId(id){
     this.id = id;
   }
 
-  borrarProveedor(){ //Y en este método ya tendremos el id, por eso ponemos this.id. Esto es porque pierde el DOM y borraría el proveedor de arriba.
+  borrarProveedor(){
     this.proveedoresService.deleteProveedor(this.id)
-                           .subscribe((resp:any)=>{
-                            this.mensaje= "El proveedor ha sido eliminado correctamente";
-                            this.mostrarAlerta = true;
-                            this.cargarProveedores()
-                            setTimeout(()=>{
-                              this.mostrarAlerta=false;
-                            },2500);
-                           },(error:any)=>{
-                            this.mensaje='Error de conexión con el servidor';
-                            this.mostrarAlerta=true;
-                            setTimeout(()=>{
-                              this.mostrarAlerta=false;
-                            },2500);
-                           });
+                .subscribe((resp:any)=>{
+                  this.mensaje = "El proveedor ha sido eliminado correctamente";
+                  this.mostrarAlerta = true;
+                  this.cargarProveedores();
+                  setTimeout(()=>{
+                      this.mostrarAlerta = false;
+                  }, 2500);
+                },(error:any)=>{
+                  if(error.error.mensaje === 'token incorrecto'){
+                    this.mensaje = "Su sesión ha caducado, reinicie sesión."
+                  }
+                  this.mostrarAlerta = true;
+                  setTimeout(()=>{
+                    this.mostrarAlerta = false;
+                  }, 2500);
+                })
+    setTimeout(()=>{
+      this.mensaje = 'Error de conexión con el servidor';
+    }, 3000)
   }
 
 }

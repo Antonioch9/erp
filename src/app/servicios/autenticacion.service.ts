@@ -9,70 +9,78 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AutenticacionService {
 
+  token:string;
+  nombre:string;
+  rol:string;
+  ultimoLogin:any;
+
   constructor(private http: HttpClient,
-    private router: Router) {
-    this.cargarCredenciales(); //Lo llamamos al principio para que nos compruebe si ya tenemos iniciada la sesion o no
-  }
+              private router: Router) {
+    this.cargarCredenciales();
+    this.cargarInicioSesion();
+    console.log(this.ultimoLogin);
+   }
 
-  token: string;
-  nombre: string;
-  rol: string;
-
-  getUsuarios() {
+  getUsuarios(){
     let url = 'http://localhost:3000/usuario';
     return this.http.get(url)
-      .map((resp: any) => {
-        return resp;
-      });
-
+                  .map( (resp:any) => {
+                    return resp;
+                  });
   }
 
-  postUsuario(usuario) {
+  postUsuario(usuario){
     let url = "http://localhost:3000/usuario";
     return this.http.post(url, usuario)
-      .map((resp: any) => {
-        return resp;
-      });
-
+                  .map( (resp:any) => {
+                    return resp;
+                  });
   }
 
-  putUsuario(id, usuario) {
+  putUsuario(id, usuario){
     let url = "http://localhost:3000/usuario/";
-    return this.http.put(url + id, usuario)
-      .map((resp: any) => {
-        return resp;
-      });
+    return this.http.put(url+id, usuario)
+                      .map( (resp:any) => {
+                        return resp;
+                      });
   }
 
-  deleteUsuario(id) {
-    let url = "http://localhost:3000/usuario/";
-    return this.http.delete(url + id)
-      .map((resp: any) => {
-        return resp;
-      });
+  deleteUsuario(id){
+    let url = 'http://localhost:3000/usuario/';
+    return this.http.delete(url+id)
+                    .map( (resp:any) => {
+                      return resp;
+                    });
   }
-  login(usuario) {
+
+
+  login(usuario){
     let url = "http://localhost:3000/login";
     return this.http.post(url, usuario)
-      .map((resp: any) => {
-        this.guardarCredenciales(resp.token, resp.nombre, resp.rol);
-        this.cargarCredenciales();
-        return resp;
-      });
-
+                  .map( (resp:any) => {
+                    this.guardarCredenciales(resp.token, resp.nombre, resp.rol);
+                    this.guardarInicioSesion();
+                    return resp;
+                  });
   }
 
-  guardarCredenciales(token, nombre, rol) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('nombre', nombre);
-    localStorage.setItem('rol', rol);
+  guardarCredenciales(token, nombre, rol){
+    localStorage.setItem('token',token);
+    localStorage.setItem('nombre',nombre);
+    localStorage.setItem('rol',rol);
     this.token = token;
     this.nombre = nombre;
     this.rol = rol;
   }
 
-  cargarCredenciales() {
-    if (localStorage.getItem('token')) {
+  guardarInicioSesion(){
+    var inicioSesion = new Date();
+    localStorage.setItem('ultimoLogin', JSON.stringify(inicioSesion));
+    this.ultimoLogin = inicioSesion;
+  }
+
+  cargarCredenciales(){
+    if(localStorage.getItem('token')){
       this.token = localStorage.getItem('token');
       this.nombre = localStorage.getItem('nombre');
       this.rol = localStorage.getItem('rol');
@@ -83,45 +91,72 @@ export class AutenticacionService {
     }
   }
 
-  isLogged() {
-    return (this.token.length > 0) ? true : false;
+  cargarInicioSesion(){
+    if(localStorage.getItem('ultimoLogin')){
+      this.ultimoLogin = JSON.parse( localStorage.getItem('ultimoLogin'));
+    } else {
+      this.ultimoLogin = '';
+    }
   }
 
-  logout() {
+  isLogged(){
+    return ( this.token.length > 0 ) ? true : false;
+  }
+
+  logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('nombre');
     localStorage.removeItem('rol');
+    localStorage.removeItem('id');
+    localStorage.removeItem('ultimoLogin');
     this.token = '';
     this.nombre = '';
     this.rol = '';
+    this.ultimoLogin = '';
     this.router.navigate(['/']);
   }
 
-  getPermLisUsuarios() {
-    if (this.rol === 'Administrador') {
-      return true;
+  getPermLisUsuarios(){
+    if(this.rol === 'Administrador'){
+      return true
     } else {
       return false;
     }
   }
 
-  getPermCompras() {
-    if (this.rol === 'Administrador' ||
-      this.rol === 'Director de Compras' ||
-      this.rol === 'Empleado de Compras') {
-      return true;
+  getPermCompras(){
+    if(this.rol === 'Administrador' ||
+       this.rol === 'Director de Compras' ||
+       this.rol === 'Empleado de Compras'){
+        return true;
     } else {
       return false;
     }
   }
 
-  getPermProveedores() {
-    if (this.rol === 'Administrador' ||
-      this.rol === 'Director de Compras') {
-      return true;
+  getPermProveedores(){
+    if(this.rol === 'Administrador' ||
+    this.rol === 'Director de Compras'){
+     return true;
     } else {
       return false;
     }
+  }
+
+  getSesiones(nombre){
+    let url = 'http://localhost:3000/sesion?nombre='+nombre;
+    return this.http.get(url)
+                  .map( (resp:any) => {
+                    return resp;
+                  });
+  }
+
+  postSesion(sesion){
+    let url = "http://localhost:3000/sesion";
+    return this.http.post(url, sesion)
+                  .map( (resp:any) => {
+                    return resp;
+                  });
   }
 
 

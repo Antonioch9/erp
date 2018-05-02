@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { AutenticacionService } from '../../servicios/autenticacion.service';
 import { Router } from '@angular/router';
-import { trigger, state, style, animate, transition} from '@angular/animations';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
@@ -20,20 +20,21 @@ import { trigger, state, style, animate, transition} from '@angular/animations';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  usuario: any;
-  mensaje:string='Error de conexión con el servidor';
+  usuario:any;
+  mensaje:string = 'Error de conexión con el servidor';
   mostrarAlerta:boolean = false;
-  enviando:boolean=false;
+  enviando:boolean = false;
+  sesion:any;
 
   constructor(private fl: FormBuilder,
               private autenticacionService: AutenticacionService,
               private router: Router) { }
 
   ngOnInit() {
-    this.loginForm=this.fl.group({
-      email:['', Validators.email],
-      password:['',Validators.required]
-    });
+    this.loginForm = this.fl.group({
+      email: ['', Validators.email],
+      password: ['', Validators.required]
+    })
   }
 
   get estadoAlerta(){
@@ -41,21 +42,20 @@ export class LoginComponent implements OnInit {
   }
 
   inicioSesion(){
-    this.mostrarAlerta=false;
-    this.enviando=true;
-    this.usuario= this.guardarUsuario();
+    this.mostrarAlerta = false;
+    this.enviando = true;
+    this.usuario = this.guardarUsuario();
     this.autenticacionService.login(this.usuario)
-                             .subscribe((res:any)=>{
-                              console.log(res);
-                              this.enviando=false;
-                              this.router.navigate(['/']);
-                             },(error:any)=>{
-                               this.mostrarAlerta=true;
-                               if (error.error.mensaje){
-                                 this.mensaje = error.error.mensaje;
-                               }
-                             });
-    
+                   .subscribe((res:any)=>{
+                     this.enviando = false;
+                     this.crearSesion();
+                     this.router.navigate(['/']);
+                   },(error:any)=>{
+                     this.mostrarAlerta = true;
+                     if(error.error.mensaje){
+                       this.mensaje = error.error.mensaje;
+                     }
+                   })
   }
 
   guardarUsuario(){
@@ -63,7 +63,21 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.get('email').value.toLowerCase(),
       password: this.loginForm.get('password').value
     }
+
     return guardarUsuario;
-}
+  }
+
+  crearSesion(){
+    this.sesion = {
+      nombre: this.autenticacionService.nombre,
+      login: new Date()
+    }
+    this.autenticacionService.postSesion(this.sesion)
+                  .subscribe((resp:any)=>{
+                    console.log(resp);
+                  },(error)=>{
+                    console.log(error);
+                  })
+  }
 
 }
